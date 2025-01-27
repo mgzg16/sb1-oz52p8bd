@@ -1,0 +1,56 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  readTime: string;
+  href: string;
+}
+
+const { title, description, readTime, href } = Astro.props;
+---
+
+<div class="concept-card">
+  <a href={href}>
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <span class="read-time">{readTime}</span>
+  </a>
+</div>
+
+<style>
+  .concept-card {
+    background: #23262d;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.2s;
+  }
+
+  .concept-card:hover {
+    transform: translateY(-5px);
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+
+  p {
+    margin: 0.5rem 0 1rem;
+    color: #ccc;
+  }
+
+  .read-time {
+    font-size: 0.9rem;
+    color: rgb(var(--accent-light));
+  }
+</style>

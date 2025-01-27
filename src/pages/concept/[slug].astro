@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const concepts = await getCollection('concepts');
+  return concepts.map(concept => ({
+    params: { slug: concept.slug },
+    props: { concept },
+  }));
+}
+
+const { concept } = Astro.props;
+const { Content } = await concept.render();
+---
+
+<Layout title={concept.data.title}>
+  <main>
+    <article>
+      <h1>{concept.data.title}</h1>
+      <div class="content">
+        <Content />
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    margin: 2rem 0;
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  .content {
+    background: #23262d;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  .content :global(h2) {
+    color: rgb(var(--accent-light));
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+  }
+  .content :global(ul) {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .content :global(li) {
+    margin: 0.5rem 0;
+  }
+</style>

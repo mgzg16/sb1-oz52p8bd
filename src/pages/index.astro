@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ConceptCard from '../components/ConceptCard.astro';
+import { getCollection } from 'astro:content';
+
+const concepts = await getCollection('concepts');
+---
+
+<Layout title="Blockchain Concepts">
+  <main>
+    <h1>Core <span class="text-gradient">Blockchain</span> Concepts</h1>
+    <p class="subtitle">
+      Explore the fundamental concepts behind major blockchain projects in simple, easy-to-understand explanations.
+    </p>
+    
+    <div class="concept-grid">
+      {
+        concepts.map((concept) => (
+          <ConceptCard
+            href={`/concept/${concept.slug}`}
+            title={concept.data.title}
+            description={concept.data.shortDescription}
+            readTime={concept.data.readTime}
+          />
+        ))
+      }
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 1200px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  .subtitle {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ccc;
+  }
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+</style>
